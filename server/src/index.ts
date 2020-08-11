@@ -2,11 +2,11 @@ import express from "express";
 // import bodyParser from "body-parser";
 // import { listings } from "./listings";
 import { ApolloServer } from "apollo-server-express";
-import { schema } from "./graphql";
+import { typeDefs, resolvers } from "./graphql/index";
 
 const PORT = 9000;
 const app = express();
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({ typeDefs, resolvers });
 
 // app.use(bodyParser.json());
 
