@@ -1,20 +1,29 @@
 import express from "express";
-import bodyParser from "body-parser";
-import { listings } from "./listings";
+// import bodyParser from "body-parser";
+// import { listings } from "./listings";
+import { ApolloServer } from "apollo-server-express";
+import { schema } from "./graphql";
 
+const PORT = 9000;
 const app = express();
-const PORT = 8080;
+const server = new ApolloServer({ schema });
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
-app.get("/listings", (_req, res) => {
-  res.send(listings);
-});
-app.post("delete-listing", (req, res) => {
-  const id: string = req.body.id;
+server.applyMiddleware({ app, path: "/api" });
 
-  for (let i = 0; i < listings.length; i++)
-    if (listings[i].id === id) return res.send(listings.splice(i, 1)[0]);
+// app.get("/listings", (_req, res) => {
+//   res.send(listings);
+// });
+// app.post("delete-listing", (req, res) => {
+//   const id: string = req.body.id;
 
-  return res.send("Failed to Delete Listing");
-});
+//   for (let i = 0; i < listings.length; i++)
+//     if (listings[i].id === id) return res.send(listings.splice(i, 1)[0]);
+
+//   return res.send("Failed to Delete Listing");
+// });
+
+app.listen(PORT);
+
+console.log(`[app]: http:localhost:${PORT}`);
